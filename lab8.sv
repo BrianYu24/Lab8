@@ -27,7 +27,8 @@ module lab8( input               CLOCK_50,
                                  VGA_HS,       //VGA horizontal sync signal
              // CY7C67200 Interface
              inout  wire  [15:0] OTG_DATA,     //CY7C67200 Data bus 16 Bits
-             output logic [1:0]  OTG_ADDR,     //CY7C67200 Address 2 Bits
+             output logic [1:0]  OTG_ADDR,     //CY7C67200 Address 2 Bits 
+				 
              output logic        OTG_CS_N,     //CY7C67200 Chip Select
                                  OTG_RD_N,     //CY7C67200 Write
                                  OTG_WR_N,     //CY7C67200 Read
@@ -57,6 +58,9 @@ module lab8( input               CLOCK_50,
     logic [1:0] hpi_addr;
     logic [15:0] hpi_data_in, hpi_data_out;
     logic hpi_r, hpi_w, hpi_cs, hpi_reset;
+	 
+	 logic [9:0] DrawX, DrawY;
+	 logic is_ball;
     
     // Interface between NIOS II and EZ-OTG chip
     hpi_io_intf hpi_io_inst(
@@ -108,13 +112,15 @@ module lab8( input               CLOCK_50,
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
     
     // TODO: Fill in the connections for the rest of the modules 
-    //VGA_controller vga_controller_instance();
-    
+    VGA_controller vga_controller_instance(.*,.Reset(Reset_h));
+	 
     // Which signal should be frame_clk?
-    //ball ball_instance();
+    ball ball_instance(.*,.Reset(Reset_h),.frame_clk(VGA_VS));
+	 
     
-    //color_mapper color_instance();
-    
+    color_mapper color_instance(.*);
+	 
+	 
     // Display keycode on hex display
     HexDriver hex_inst_0 (keycode[3:0], HEX0);
     HexDriver hex_inst_1 (keycode[7:4], HEX1);
