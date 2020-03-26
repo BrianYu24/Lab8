@@ -91,6 +91,26 @@ module  ball ( input         Clk,                // 50 MHz clock
                 Ball_X_Motion_in = Ball_X_Step;
 					 
 					 
+				if (keycode == 8'd26)			//W pressed
+				begin
+					 Ball_Y_Motion_in = (~(Ball_Y_Step) + 1'b1);
+					 Ball_X_Motion_in = 10'd0;
+				end
+				else if (keycode == 8'd22)	//S pressed
+				begin
+					 Ball_Y_Motion_in = Ball_Y_Step;
+					 Ball_X_Motion_in = 10'd0;
+				end
+				else if (keycode == 8'd4)	//A pressed
+				begin
+					 Ball_X_Motion_in = (~(Ball_X_Step) + 1'b1);
+					 Ball_Y_Motion_in = 10'd0;
+				end
+				else if (keycode == 8'd7)	//D pressed
+				begin
+					 Ball_X_Motion_in = Ball_X_Step;
+					 Ball_Y_Motion_in = 10'd0;
+				end
 				
 				
         
